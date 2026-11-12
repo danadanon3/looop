@@ -16,6 +16,7 @@
     opacity:0; transition:opacity .9s ease;   /* плавное появление после загрузки */
   }
   #villa-hero.is-ready{ opacity:1; }
+  @media (max-width:640px){ #villa-hero{ top:-7%; } }   /* телефон: модель выше */
   /* Если HTML-слой лежит НАД кнопками, этот пункт тоже отдаёт клики вниз */
   .t396__elem:has(#villa-hero), .tn-atom:has(#villa-hero){ pointer-events:none !important; }
 </style>
