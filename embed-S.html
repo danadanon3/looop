@@ -49,6 +49,12 @@
   var mv = document.getElementById('villa-hero');
   if (!mv) return;
 
+  /* максимальная чёткость: не снижать разрешение рендера на слабых устройствах */
+  customElements.whenDefined('model-viewer').then(function () {
+    var MV = customElements.get('model-viewer');
+    if (MV) MV.minimumRenderScale = 1;
+  });
+
   /* модель с готовыми материалами (штукатурка, камень, дерево, стекло, вода) — цвета не трогаем */
   mv.addEventListener('load', function () { mv.classList.add('is-ready'); });
 
