@@ -35,8 +35,8 @@
   interaction-prompt="none"
   disable-zoom disable-pan disable-tap
 
-  environment-image="neutral"
-  exposure="0.95"
+  environment-image="legacy"
+  exposure="0.9"
   shadow-intensity="1.1"
   shadow-softness="1"
 
@@ -50,36 +50,14 @@
   var mv = document.getElementById('villa-hero');
   if (!mv) return;
 
-  /* ---------- НАСТРОЙКИ, КОТОРЫЕ МОЖНО КРУТИТЬ ----------
-     TINT  — оттенок стен [R, G, B, 1], 1 = без изменений.
-             Теплее/темнее: [1, 0.94, 0.86, 1]. Белее: [1, 0.98, 0.95, 1].
-     Размер в кадре — число в camera-orbit выше (120% → 100% крупнее, 140% мельче). */
-  var TINT = [1, 0.95, 0.89, 1];
-
-  mv.addEventListener('load', function () {
-    var model = mv.model;
-    if (model && model.materials) {
-      model.materials.forEach(function (mat) {
-        /* убирает «прозрачные дыры» от полупрозрачных материалов */
-        try { mat.setAlphaMode('OPAQUE'); } catch (e) {}
-        /* показывает внутреннюю сторону стен, если у сетки нет задних граней */
-        try { mat.setDoubleSided(true); } catch (e) {}
-        /* тёплый кремово-штукатурный оттенок вместо ослепительно-белого, матовость */
-        try {
-          mat.pbrMetallicRoughness.setBaseColorFactor(TINT);
-          mat.pbrMetallicRoughness.setMetallicFactor(0);
-          mat.pbrMetallicRoughness.setRoughnessFactor(0.9);
-        } catch (e) {}
-      });
-    }
-    mv.classList.add('is-ready');
-  });
+  /* модель с готовыми материалами (штукатурка, камень, дерево, стекло, вода) — цвета не трогаем */
+  mv.addEventListener('load', function () { mv.classList.add('is-ready'); });
 
   /* телефон: облегчённая модель (быстрее грузится) и камера поближе — вилла крупнее */
   var mobile = window.matchMedia('(max-width: 640px)').matches;
   mv.setAttribute('src', mobile
-    ? 'https://cdn.jsdelivr.net/gh/danadanon3/villaM-3d@main/villa-M-mobile.glb'
-    : 'https://cdn.jsdelivr.net/gh/danadanon3/villaM-3d@main/villa-M-opt.glb');
+    ? 'https://cdn.jsdelivr.net/gh/danadanon3/villaM-3d@main/villa-M-hq-mobile.glb'
+    : 'https://cdn.jsdelivr.net/gh/danadanon3/villaM-3d@main/villa-M-hq.glb');
   if (mobile) mv.setAttribute('camera-orbit', '35deg 44deg 98%');
 })();
 </script>
